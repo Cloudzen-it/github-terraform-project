@@ -1,51 +1,33 @@
-# GitHub OpenTofu Management
+# OpenTofu (Terraform) GitHub Management Guidelines
 
-This project uses OpenTofu to manage GitHub resources for the Cloudzen-it organization.
+## Commands
 
-[![OpenTofu CI/CD](https://github.com/Cloudzen-it/github-terraform-project/actions/workflows/opentofu.yml/badge.svg)](https://github.com/Cloudzen-it/github-terraform-project/actions/workflows/opentofu.yml)
+- **Initialize**: `tofu init`
+- **Format code**: `tofu fmt`
+- **Validate configuration**: `tofu validate`
+- **Plan changes**: `tofu plan`
+- **Apply changes**: `tofu apply`
+- **Destroy resources**: `tofu destroy`
+- **Check output**: `tofu output`
 
-## Prerequisites
+## Code Style Guidelines
 
-- [OpenTofu](https://opentofu.org/docs/intro/install/) >= 1.6.0
-- GitHub personal access token with appropriate permissions
+- **Naming**: Use snake_case for resources, variables, and outputs
+- **Indentation**: 2 spaces
+- **Organization**: One resource block per GitHub repository
+- **Variables**: Define all variables in `variables.tf` with descriptions and types
+- **Ordering**: Required arguments first, optional arguments second
+- **Formatting**: Run `tofu fmt` before committing changes
+- **Resource Structure**:
+  - Name and description first
+  - Visibility next
+  - Feature flags (has_issues, etc.) in consistent order
+  - Security settings last
 
-## Setup
+## Best Practices
 
-1. Copy the example variable file:
-   ```
-   cp terraform.tfvars.example terraform.tfvars
-   ```
-
-2. Edit `terraform.tfvars` and set your GitHub token and organization name.
-
-3. Initialize OpenTofu:
-   ```
-   tofu init
-   ```
-
-4. Plan your changes:
-   ```
-   tofu plan
-   ```
-
-5. Apply the changes:
-   ```
-   tofu apply
-   ```
-
-## Repository Structure
-
-- `main.tf` - Provider configuration
-- `variables.tf` - Input variables
-- `repositories.tf` - GitHub repository definitions
-- `.github/workflows/opentofu.yml` - CI/CD workflow
-
-## Managing Resources
-
-To add a new repository, add a new `github_repository` resource to `repositories.tf`.
-
-## Important Notes
-
-- Be careful with the `delete_repository` parameter (defaults to `false`).
-- Your GitHub token needs appropriate permissions to manage repositories.
-- Always run `tofu plan` before applying changes.
+- Always run `tofu plan` before `tofu apply`
+- Set `delete_repository = false` for safety
+- Never commit sensitive information like tokens
+- Keep repository configurations consistent
+- Document changes in commit messages
